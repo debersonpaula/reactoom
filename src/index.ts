@@ -1,2 +1,1 @@
-export { Store } from './components/Store';
-export { Model } from './decorators/Model';
+export { useModelContext } from './methods/useModelContext';
