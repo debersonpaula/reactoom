@@ -1,8 +1,11 @@
 import { Context } from './Context';
 import { IType } from '../interfaces/IType';
+import { DebugMapper } from '../tools/Debugger/DebugMapper';
+import { DebugMode } from '../tools/Debugger/Debugger';
 
 class TDataContext {
   private _contexts: Context[] = [];
+  private _debugger = new DebugMapper(DebugMode);
 
   /**
    * Find compatible Context or create one if not exists
@@ -13,7 +16,7 @@ class TDataContext {
 
     // create new context if not exists
     if (!context) {
-      context = new Context(classFn);
+      context = new Context(classFn, this._debugger);
       this._contexts.push(context);
     }
 

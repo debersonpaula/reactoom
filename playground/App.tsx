@@ -1,10 +1,11 @@
 import React from 'react';
-import { Counter } from './counter';
+import { HashRouter } from 'react-router-dom';
+import { Routes } from './Routes';
 
 export function App(): JSX.Element {
   return (
-    <div>
-      <Counter />
-    </div>
+    <HashRouter>
+      <Routes />
+    </HashRouter>
   );
 }

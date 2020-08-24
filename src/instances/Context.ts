@@ -1,7 +1,7 @@
 import React from 'react';
 import { IType } from '../interfaces/IType';
 import { IAction } from '../interfaces/IAction';
-const debugMode = process.env.REACTOOM_DEBUG === 'true';
+import { DebugMapper } from '../tools/Debugger/DebugMapper';
 
 export class Context {
   private _className: string;
@@ -10,17 +10,25 @@ export class Context {
   private _state: unknown;
   private _dispatcher: React.Dispatch<IAction>;
 
-  constructor(classFn: IType<unknown>) {
+  constructor(classFn: IType<unknown>, private _debugger: DebugMapper) {
     this._fn = classFn;
     this._className = classFn.name;
     this._instance = new classFn();
     this._extractAllProperties();
+    this._debugger.addContext(classFn);
   }
 
+  /**
+   * Compare if classFn is the same of the class of this Context
+   * @param classFn
+   */
   public isCompatible(classFn: IType<unknown>): boolean {
     return this._fn === classFn;
   }
 
+  /**
+   * Generate state reducer and dispatcher for all methods
+   */
   public state<T>(): T {
     const [state, dispatcher] = React.useReducer(this._reducer, this._state);
     this._dispatcher = dispatcher;
@@ -78,20 +86,20 @@ export class Context {
     handler.call(this._instance, action.args);
     const nextState = Object.assign({}, this._state);
 
-    if (debugMode) {
-      console.debug(
-        `ReactOOM Dispatcher
-    - Action: ${this._className}.${action.methodName}
-    - Args: `,
-        action.args,
-        `
-    - Previous state`,
-        state,
-        `
-    - Next state`,
-        nextState,
-      );
-    }
+    // if (debugMode) {
+    //   console.debug(
+    //     `ReactOOM Dispatcher
+    // - Action: ${this._className}.${action.methodName}
+    // - Args: `,
+    //     action.args,
+    //     `
+    // - Previous state`,
+    //     state,
+    //     `
+    // - Next state`,
+    //     nextState,
+    //   );
+    // }
 
     return nextState;
   };

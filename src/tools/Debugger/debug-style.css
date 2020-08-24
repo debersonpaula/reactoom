@@ -1,0 +1,10 @@
+#debugger {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: black;
+  color: white;
+  border: 1px solid grey;
+  height: 260px;
+}
