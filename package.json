@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "tsrx start ./config/dev.config.js"
+    "start": "tsrx start ./config/dev.config.js",
+    "tsc": "tsc"
   },
   "author": "",
   "license": "ISC",

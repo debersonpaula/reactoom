@@ -1,11 +1,11 @@
 import React from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
 
-import { PromiseApp } from './promise/PromiseApp';
+import { AsyncApp } from './asynchronous/AsyncApp';
 import { CounterApp } from './counter/CounterApp';
 
 export function Routes(): JSX.Element {
-  const components = [CounterApp, PromiseApp];
+  const components = [CounterApp, AsyncApp];
   return (
     <div>
       <ul>
