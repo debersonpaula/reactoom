@@ -1,11 +1,10 @@
 import { Context } from './Context';
 import { IType } from '../interfaces/IType';
-import { DebugMapper } from '../tools/Debugger/DebugMapper';
-import { DebugMode } from '../tools/Debugger/Debugger';
+import { EventRelay } from '../tools/EventRelay';
 
-class TDataContext {
+export class TDataContext {
   private _contexts: Context[] = [];
-  private _debugger = new DebugMapper(DebugMode);
+  private _eventRelay = new EventRelay();
 
   /**
    * Find compatible Context or create one if not exists
@@ -16,11 +15,20 @@ class TDataContext {
 
     // create new context if not exists
     if (!context) {
-      context = new Context(classFn, this._debugger);
+      context = new Context(classFn, this._eventRelay);
       this._contexts.push(context);
     }
 
     return context;
+  }
+
+  /**
+   * Get Events Relay of the dispatcher
+   * Any actions dispatched will trigger the observer
+   * and will sent information about the action dispatched.
+   */
+  public get events(): EventRelay {
+    return this._eventRelay;
   }
 }
 

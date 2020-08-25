@@ -5,8 +5,8 @@ import { App } from './App';
 import './style.css';
 import { EnableDebugger } from 'reactoom';
 
+EnableDebugger();
+
 const root = document.getElementById('app');
 const HotReloadComponent = reactHot(module, App);
 ReactDOM.render(<HotReloadComponent />, root);
-
-EnableDebugger();

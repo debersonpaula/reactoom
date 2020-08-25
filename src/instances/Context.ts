@@ -1,21 +1,19 @@
 import React from 'react';
 import { IType } from '../interfaces/IType';
 import { IAction } from '../interfaces/IAction';
-import { DebugMapper } from '../tools/Debugger/DebugMapper';
+import { EventRelay } from '../tools/EventRelay';
 
 export class Context {
-  private _className: string;
   private _fn: IType<unknown>;
   private _instance: unknown;
   private _state: unknown;
   private _dispatcher: React.Dispatch<IAction>;
 
-  constructor(classFn: IType<unknown>, private _debugger: DebugMapper) {
+  constructor(classFn: IType<unknown>, private _eventRelay: EventRelay) {
     this._fn = classFn;
-    this._className = classFn.name;
     this._instance = new classFn();
     this._extractAllProperties();
-    this._debugger.addContext(classFn);
+    this._eventRelay.addContext(classFn);
   }
 
   /**
@@ -85,22 +83,7 @@ export class Context {
     const handler = this._instance[action.methodName];
     handler.call(this._instance, action.args);
     const nextState = Object.assign({}, this._state);
-
-    // if (debugMode) {
-    //   console.debug(
-    //     `ReactOOM Dispatcher
-    // - Action: ${this._className}.${action.methodName}
-    // - Args: `,
-    //     action.args,
-    //     `
-    // - Previous state`,
-    //     state,
-    //     `
-    // - Next state`,
-    //     nextState,
-    //   );
-    // }
-
+    this._eventRelay.addEvent(this._fn, action.methodName, action.args, state, nextState);
     return nextState;
   };
 }
