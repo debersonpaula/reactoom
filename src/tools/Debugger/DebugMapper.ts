@@ -3,7 +3,6 @@ import { TDataContext } from '../../instances/DataContext';
 export class DebugMapper {
   constructor(dataContext: TDataContext) {
     dataContext.events.subject.subscribe((event) => {
-      console.log('event relay', event);
       if (event) {
         if (event.methodName) {
           console.debug(
@@ -13,15 +12,20 @@ export class DebugMapper {
             event.args,
             `
           - Previous state`,
-            event.previousState,
+            this.cleanState(event.previousState),
             `
           - Next state`,
-            event.nextState,
+            this.cleanState(event.nextState),
           );
         } else {
           console.debug('ReactOOM - Creating Model:', event.classFn.name);
         }
       }
     });
+  }
+
+  private cleanState(obj: unknown) {
+    // return JSON.parse(JSON.stringify(obj));
+    return obj;
   }
 }
