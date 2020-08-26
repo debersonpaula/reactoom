@@ -29,5 +29,8 @@
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0",
     "typescript": ">=3.9.0"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
   }
 }
