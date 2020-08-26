@@ -1,5 +1,5 @@
 import { DebugMapper } from './DebugMapper';
-import { DataContext } from 'src/instances/DataContext';
+import { DataContext } from '../../instances/DataContext';
 
 let mapper: DebugMapper;
 

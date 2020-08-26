@@ -6,11 +6,11 @@ export function AsyncApp(): JSX.Element {
   const context = useModelContext(AsyncModel);
   return (
     <div>
-      Status = {context.status}
+      <p id="status">Status = {context.status}</p>
       <p>
-        <button onClick={() => context.start(true)}>Send success</button>
-        <button onClick={() => context.start(false)}>Send failure</button>
-        <button onClick={() => context.cancel()}>Cancel</button>
+        <button onClick={() => context.start(true)} id="success">Send success</button>
+        <button onClick={() => context.start(false)} id="failure">Send failure</button>
+        <button onClick={() => context.cancel()} id="cancel">Cancel</button>
       </p>
       <h4>Logs:</h4>
       {context.messages.map((item, key) => (
