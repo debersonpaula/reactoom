@@ -1,7 +1,6 @@
 {
   "name": "reactoom",
   "version": "0.0.1",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "tsrx start ./config/dev.config.js",
@@ -13,7 +12,7 @@
     "tsc": "tsc",
     "clear": "rm -rf ./bin"
   },
-  "author": "",
+  "author": "D.A.Paula <deberson.paula@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "rxjs": "6.6.2"
@@ -31,6 +30,15 @@
     "typescript": ">=3.9.0"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  }
+    "registry": "https://npm.pkg.github.com/@debersonpaula"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/debersonpaula/reactoom.git"
+  },
+  "bugs": {
+    "url": "https://github.com/debersonpaula/reactoom/issues"
+  },
+  "homepage": "https://github.com/debersonpaula/reactoom#readme",
+  "description": ""
 }
