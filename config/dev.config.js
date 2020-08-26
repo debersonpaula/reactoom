@@ -15,4 +15,5 @@ module.exports = DefaultConfig({
     open: true,
     hot: true,
   },
+  skipConfigFile: true,
 });

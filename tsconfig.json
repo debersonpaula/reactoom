@@ -1,10 +1,11 @@
 {
   "extends": "./node_modules/tsrx/tsconfig.json",
-  "include": ["src/**/*", "playground/**/*"],
+  "include": ["src/**/*", "playground/**/*", "test/**/*"],
   "exclude": ["node_modules"],
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "dist",
+    "esModuleInterop": true,
     "paths": {
       "reactoom": ["src/index"]
     }
