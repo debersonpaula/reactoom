@@ -1,0 +1,13 @@
+{
+  "extends": "./node_modules/tsrx/tsconfig.json",
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"],
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "bin",
+    "declaration": true,
+    "paths": {
+      "reactoom": ["src/index"]
+    }
+  }
+}
