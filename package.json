@@ -1,6 +1,6 @@
 {
   "name": "reactoom",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "main": "index.js",
   "scripts": {
     "start": "tsrx start ./config/dev.config.js",
@@ -23,7 +23,7 @@
     "@typescript-eslint/parser": "3.9.1",
     "eslint": "7.7.0",
     "eslint-plugin-react": "7.20.6",
-    "tsrx": "0.2.2"
+    "tsrx": "0.2.3"
   },
   "peerDependencies": {
     "react": ">=16.8.0",

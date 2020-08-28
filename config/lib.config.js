@@ -9,4 +9,5 @@ module.exports = DefaultConfig({
   outputPath: 'bin',
   skipConfigFile: true,
   library: true,
+  libraryDependencies: true,
 });
