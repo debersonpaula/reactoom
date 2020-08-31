@@ -6,7 +6,7 @@ export class AsyncModel {
 
   private _subscription: Subscription;
 
-  start(success: boolean): void {
+  start = (success: boolean): void => {
     if (this._subscription) {
       this._subscription.unsubscribe();
       this._subscription = null;
@@ -32,20 +32,20 @@ export class AsyncModel {
         this.changeStatus(Status.Failed, error);
       },
     );
-  }
+  };
 
-  cancel(): void {
+  cancel = (): void => {
     if (this._subscription) {
       this._subscription.unsubscribe();
       this._subscription = null;
     }
     this.status = Status.Cancelled;
-  }
+  };
 
-  public changeStatus(status: Status, message: string): void {
+  changeStatus = (status: Status, message: string): void => {
     this.status = status;
     this.messages.push(message);
-  }
+  };
 }
 
 enum Status {

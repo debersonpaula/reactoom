@@ -1,11 +1,11 @@
 export class CounterModel {
   count = 0;
 
-  add(): void {
+  add = (): void => {
     this.count++;
-  }
+  };
 
-  del(): void {
+  del = (): void => {
     this.count--;
-  }
+  };
 }

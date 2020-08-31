@@ -37,19 +37,10 @@ export class Context {
 
   private _extractAllProperties(): void {
     this._state = {};
-    this._dispatcher = () => null;
 
     Object.getOwnPropertyNames(this._instance).forEach((propName) => {
       this._definePrimaryProp(propName);
       if (typeof this._instance[propName] === 'function') {
-        this._defineMethodProp(propName);
-      }
-    });
-
-    Object.getOwnPropertyNames(this._fn.prototype).forEach((propName) => {
-      const objmethod = this._fn.prototype[propName];
-      if (typeof objmethod === 'function' && propName !== 'constructor' && propName !== '__reactstandin__regenerateByEval') {
-        this._definePrimaryProp(propName);
         this._defineMethodProp(propName);
       }
     });
@@ -80,13 +71,9 @@ export class Context {
 
   private _reducer = (state: unknown, action: IAction): unknown => {
     const actionHandler = this._actions.find((item) => item.name === action.methodName);
-    if (actionHandler) {
-      actionHandler.handler.call(this._instance, ...action.args);
-      const nextState = Object.assign({}, this._state);
-      this._eventRelay.addEvent(this._fn, action.methodName, action.args, state, nextState);
-      return nextState;
-    }
-
-    throw new Error(`Method ${action.methodName} not found in this context [${this._fn.name}].`);
+    actionHandler.handler.call(this._instance, ...action.args);
+    const nextState = Object.assign({}, this._state);
+    this._eventRelay.addEvent(this._fn, action.methodName, action.args, state, nextState);
+    return nextState;
   };
 }
