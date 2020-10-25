@@ -1,6 +1,6 @@
 {
   "name": "reactoom",
-  "version": "0.0.5",
+  "version": "0.0.1",
   "main": "index.js",
   "scripts": {
     "start": "tsrx start ./config/dev.config.js",
@@ -31,9 +31,6 @@
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0",
     "typescript": ">=3.9.0"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/@debersonpaula"
   },
   "repository": {
     "type": "git",
