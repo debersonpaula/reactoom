@@ -3,16 +3,19 @@ import { Switch, Route, Link } from 'react-router-dom';
 
 import { AsyncApp } from './asynchronous/AsyncApp';
 import { CounterApp } from './counter/CounterApp';
+import { EffectApp } from './effects/EffectApp';
 
 export function Routes(): JSX.Element {
-  const components = [CounterApp, AsyncApp];
+  const components = [CounterApp, AsyncApp, EffectApp];
   return (
     <div>
       <ul>
         {components.map((item, key) => (
           <li key={key}>
             <h3>
-              <Link to={item.name} id={item.name}>{item.name}</Link>
+              <Link to={item.name} id={item.name}>
+                {item.name}
+              </Link>
             </h3>
           </li>
         ))}
