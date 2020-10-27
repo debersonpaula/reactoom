@@ -5,5 +5,11 @@ import { CounterComponent } from './CounterComponent';
 
 export function CounterApp(): JSX.Element {
   const counterContext = useModelContext(CounterModel);
-  return <CounterComponent count={counterContext.count} add={counterContext.add} del={counterContext.del} />;
+  return (
+    <div>
+      <CounterComponent count={counterContext.count} add={counterContext.add} del={counterContext.del} />
+      <p>Property test: {counterContext.totalCount}</p>
+      <p>Internal Func test: {counterContext.internalFunc()}</p>
+    </div>
+  );
 }

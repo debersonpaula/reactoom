@@ -38,10 +38,20 @@ export class Context {
   private _extractAllProperties(): void {
     this._state = {};
 
-    Object.getOwnPropertyNames(this._instance).forEach((propName) => {
+    const propNames = Object.getOwnPropertyNames(this._instance);
+
+    propNames.forEach((propName) => {
       this._definePrimaryProp(propName);
       if (typeof this._instance[propName] === 'function') {
         this._defineMethodProp(propName);
+      }
+    });
+
+    const constructorProps = Object.getOwnPropertyNames(this._fn.prototype);
+
+    constructorProps.forEach((key) => {
+      if (key !== 'constructor' && key !== '__reactstandin__regenerateByEval') {
+        this._definePrimaryProp(key);
       }
     });
   }
@@ -70,7 +80,9 @@ export class Context {
   }
 
   private _reducer = (state: unknown, action: IAction): unknown => {
+    // get function to execute action
     const actionHandler = this._actions.find((item) => item.name === action.methodName);
+    // call the action trigger with internal instance
     actionHandler.handler.call(this._instance, ...action.args);
     const nextState = Object.assign({}, this._state);
     this._eventRelay.addEvent(this._fn, action.methodName, action.args, state, nextState);

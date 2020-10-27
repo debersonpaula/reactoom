@@ -8,4 +8,12 @@ export class CounterModel {
   del = (): void => {
     this.count--;
   };
+
+  public get totalCount(): string {
+    return 'Total = ' + this.count;
+  }
+
+  internalFunc(): string {
+    return 'Total = ' + this.count;
+  }
 }
