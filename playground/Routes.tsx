@@ -4,9 +4,10 @@ import { Switch, Route, Link } from 'react-router-dom';
 import { AsyncApp } from './asynchronous/AsyncApp';
 import { CounterApp } from './counter/CounterApp';
 import { EffectApp } from './effects/EffectApp';
+import { PromiseApp } from './promise/PromiseApp';
 
 export function Routes(): JSX.Element {
-  const components = [CounterApp, AsyncApp, EffectApp];
+  const components = [CounterApp, AsyncApp, EffectApp, PromiseApp];
   return (
     <div>
       <ul>
