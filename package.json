@@ -1,15 +1,16 @@
 {
   "name": "reactoom",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "main": "index.js",
   "scripts": {
     "start": "tsrx start ./config/dev.config.js",
     "test": "tsrx test ./config/test.config.js",
-    "build": "npm run clear && npm run build:binary && npm run build:types",
+    "build": "npm run clear && tsc --project tsconfig.types.json",
+    "build:old": "npm run clear && npm run build:binary && npm run build:types",
     "build:pg": "tsrx build ./config/dev.config.js",
     "build:binary": "tsrx library ./config/lib.config.js",
     "build:types": "tsc --project tsconfig.types.json --emitDeclarationOnly",
-    "deploy": "npm run build && cd ./bin && npm publish",
+    "deploy": "npm run build && cp package.json bin/ && cd ./bin && npm publish",
     "tsc": "tsc",
     "clear": "rm -rf ./bin"
   },
