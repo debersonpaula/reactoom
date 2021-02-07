@@ -80,6 +80,8 @@ export class Context {
   }
 
   private _reducer = (state: unknown, action: IAction): unknown => {
+    console.log('_reducer', action, this);
+
     // get function to execute action
     const actionHandler = this._actions.find((item) => item.name === action.methodName);
     // call the action trigger with internal instance

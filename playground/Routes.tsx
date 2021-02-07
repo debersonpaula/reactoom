@@ -4,10 +4,13 @@ import { Switch, Route, Link } from 'react-router-dom';
 import { AsyncApp } from './asynchronous/AsyncApp';
 import { CounterApp } from './counter/CounterApp';
 import { EffectApp } from './effects/EffectApp';
+import { HooksApp } from './hooks/HooksApp';
+import { NestedApp } from './nested/NestedApp';
 import { PromiseApp } from './promise/PromiseApp';
+import { ForceUpdateApp } from './force-update/ForceUpdateApp';
 
 export function Routes(): JSX.Element {
-  const components = [CounterApp, AsyncApp, EffectApp, PromiseApp];
+  const components = [CounterApp, AsyncApp, EffectApp, PromiseApp, NestedApp, HooksApp, ForceUpdateApp];
   return (
     <div>
       <ul>
