@@ -1,18 +1,19 @@
 import React from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
-
-import { AsyncApp } from './asynchronous/AsyncApp';
-import { CounterApp } from './counter/CounterApp';
+import MultipleScopedContext from './scoped/MultipleScopedContext';
+import ScopedContext from './scoped/ScopedContext';
 
 export function Routes(): JSX.Element {
-  const components = [CounterApp, AsyncApp];
+  const components = [ScopedContext, MultipleScopedContext];
   return (
     <div>
       <ul>
         {components.map((item, key) => (
           <li key={key}>
             <h3>
-              <Link to={item.name} id={item.name}>{item.name}</Link>
+              <Link to={item.name} id={item.name}>
+                {item.name}
+              </Link>
             </h3>
           </li>
         ))}

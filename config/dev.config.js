@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable no-undef */
 
-var DefaultConfig = require('tsrx/tools').DefaultConfig;
+var { DefaultConfig } = require('tsrx/tools');
 
 module.exports = DefaultConfig({
   sourcePath: 'playground',
   outputPath: 'dist',
-  // configFile: 'config/index.ts',
+  htmlTemplate: 'playground/index.html',
   port: 8080,
   host: 'localhost',
   env: {},
