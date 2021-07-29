@@ -13,6 +13,13 @@ export class StateContext {
     this._instance = new classFn();
     this._extractAllProperties();
     this._dispatcher = dispatcher;
+  }
+
+  get state(): unknown {
+    return this._state;
+  }
+
+  dispatchInitialState(): void {
     this._dispatchState('INITIAL_STATE');
   }
 
@@ -34,7 +41,11 @@ export class StateContext {
 
     Object.getOwnPropertyNames(this._fn.prototype).forEach((propName) => {
       const objmethod = this._fn.prototype[propName];
-      if (typeof objmethod === 'function' && propName !== 'constructor' && propName !== '__reactstandin__regenerateByEval') {
+      if (
+        typeof objmethod === 'function' &&
+        propName !== 'constructor' &&
+        propName !== '__reactstandin__regenerateByEval'
+      ) {
         this._definePrimaryProp(propName);
         this._defineMethodProp(propName);
       }
@@ -46,7 +57,9 @@ export class StateContext {
       enumerable: true,
       get: () => this._instance[propName],
       set: () => {
-        throw new Error(`The property ${propName} is read only and can't be assigned outside the context.`);
+        throw new Error(
+          `The property ${propName} is read only and can't be assigned outside the context.`,
+        );
       },
     });
   }

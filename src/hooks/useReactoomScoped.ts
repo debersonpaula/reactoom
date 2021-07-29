@@ -5,10 +5,17 @@ import { scopedReducer } from '../reducers/scopedReducer';
 
 export function useReactoomScoped<T>(classFn: IType<T>): T {
   const [state, dispatcher] = useReducer(scopedReducer, null);
+  let stateContext: StateContext;
+
+  if (!state) {
+    stateContext = new StateContext(classFn, dispatcher);
+  }
+
   useEffect(() => {
-    if (!state) {
-      new StateContext(classFn, dispatcher);
+    if (stateContext) {
+      stateContext.dispatchInitialState();
     }
   }, []);
-  return state ? (state as T) : ({} as T);
+
+  return (state as T) || (stateContext.state as T);
 }

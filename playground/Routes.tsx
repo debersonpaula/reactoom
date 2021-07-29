@@ -6,13 +6,17 @@ import MultipleScopedContext from './scoped/MultipleScopedContext';
 import MultipleSingletonContext from './singleton/MultipleSingletonContext';
 import ScopedContext from './scoped/ScopedContext';
 import SingletonContext from './singleton/SingletonContext';
+import WithEffectContext from './scoped/WithEffectContext';
+import WithEffectSingletonContext from './singleton/WIthEffectSingletonContext';
 
 export function Routes(): JSX.Element {
   const components = [
     ScopedContext,
     MultipleScopedContext,
     AsyncScopedContext,
+    WithEffectContext,
     SingletonContext,
+    WithEffectSingletonContext,
     MultipleSingletonContext,
     IsolatedSingletonContext,
   ];
