@@ -1,6 +1,6 @@
 import React from 'react';
 import { IType } from '../interfaces/IType';
-import { IReducerAction } from '../reducers/IReducerAction';
+import { IReducerAction } from '../interfaces/IReducerAction';
 
 export class StateContext {
   private _fn: IType<unknown>;
