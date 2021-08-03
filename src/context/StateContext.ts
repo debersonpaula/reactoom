@@ -4,18 +4,23 @@ import { IReducerAction } from '../interfaces/IReducerAction';
 
 export class StateContext {
   private _fn: IType<unknown>;
+  private _className: string;
   private _instance: unknown;
   private _state: unknown;
-  private _dispatcher: React.Dispatch<IReducerAction>;
+  public _dispatcher: React.Dispatch<IReducerAction>;
 
-  constructor(classFn: IType<unknown>, dispatcher: React.Dispatch<IReducerAction>) {
+  constructor(classFn: IType<unknown>, dispatcher?: React.Dispatch<IReducerAction>) {
     this._fn = classFn;
+    this._className = classFn.name;
     this._instance = new classFn();
     this._extractAllProperties();
-    this._dispatcher = dispatcher;
+    if (dispatcher) {
+      this._dispatcher = dispatcher;
+    }
   }
 
-  get state(): unknown {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  get state(): any {
     return this._state;
   }
 
@@ -24,17 +29,17 @@ export class StateContext {
   }
 
   private _dispatchState(name: string) {
-    const payload = Object.assign({}, this._state);
-    this._dispatcher({ name, payload });
+    const payload = { ...this.state };
+    this._dispatcher({ name, payload, className: this._className });
   }
 
   private _extractAllProperties(): void {
     this._state = {};
-    this._dispatcher = () => null;
 
     Object.getOwnPropertyNames(this._instance).forEach((propName) => {
       this._definePrimaryProp(propName);
-      if (typeof this._instance[propName] === 'function') {
+      const property = this._instance[propName];
+      if (typeof property === 'function' && !property.disabled) {
         this._defineMethodProp(propName);
       }
     });
@@ -68,10 +73,11 @@ export class StateContext {
     // keep real action handler
     const handler = this._instance[propName].bind(this._instance);
     const name = this._fn.name + '.' + propName;
+    const _dispatchState = this._dispatchState.bind(this);
     // replace instance method to dispatcher
     this._instance[propName] = (...args: unknown[]) => {
       handler(...args);
-      this._dispatchState(name);
+      _dispatchState(name);
     };
   }
 }
