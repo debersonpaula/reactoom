@@ -1,5 +1,5 @@
 import React from 'react';
-import { useReactoomScoped } from '../../src';
+import { useScoped } from '../../src';
 
 class CounterModel {
   count = 0;
@@ -14,7 +14,7 @@ class CounterModel {
 }
 
 const WithEffectContext: React.FC = () => {
-  const counter = useReactoomScoped(CounterModel);
+  const counter = useScoped(CounterModel);
 
   React.useEffect(() => {
     counter.add();

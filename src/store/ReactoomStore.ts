@@ -14,11 +14,16 @@ export class ReactoomStore {
     const className = classFn.name;
     let stateContext = this._states[className];
     if (!stateContext) {
-      stateContext = new StateContext(classFn);
+      stateContext = new StateContext(classFn, null, this);
       this._states[className] = stateContext;
     }
     stateContext._dispatcher = dispatcher;
     return stateContext.state;
+  };
+
+  public getState = (className: string): unknown => {
+    const context = this._states[className];
+    return context?.state;
   };
 
   public reducer = (state: IReactoomContext, action: IReducerAction): IReactoomContext => {

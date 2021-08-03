@@ -1,6 +1,8 @@
 import React from 'react';
 import { IType } from '../interfaces/IType';
 import { IReducerAction } from '../interfaces/IReducerAction';
+import { ReactoomDependency } from '../store/ReactoomDependency';
+import { ReactoomStore } from '../store/ReactoomStore';
 
 export class StateContext {
   private _fn: IType<unknown>;
@@ -8,15 +10,19 @@ export class StateContext {
   private _instance: unknown;
   private _state: unknown;
   public _dispatcher: React.Dispatch<IReducerAction>;
+  public _store: ReactoomStore;
 
-  constructor(classFn: IType<unknown>, dispatcher?: React.Dispatch<IReducerAction>) {
+  constructor(
+    classFn: IType<unknown>,
+    dispatcher?: React.Dispatch<IReducerAction>,
+    store?: ReactoomStore,
+  ) {
+    this._store = store;
     this._fn = classFn;
     this._className = classFn.name;
     this._instance = new classFn();
     this._extractAllProperties();
-    if (dispatcher) {
-      this._dispatcher = dispatcher;
-    }
+    this._dispatcher = dispatcher;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -58,6 +64,10 @@ export class StateContext {
   }
 
   private _definePrimaryProp(propName: string) {
+    if (this._instance[propName] instanceof ReactoomDependency) {
+      this._defineDependencyProp(propName, this._instance[propName]);
+    }
+
     Object.defineProperty(this._state, propName, {
       enumerable: true,
       get: () => this._instance[propName],
@@ -67,6 +77,10 @@ export class StateContext {
         );
       },
     });
+  }
+
+  private _defineDependencyProp(propName: string, dep: ReactoomDependency) {
+    this._instance[propName] = this._store.getState(dep.classFn.name);
   }
 
   private _defineMethodProp(propName: string) {

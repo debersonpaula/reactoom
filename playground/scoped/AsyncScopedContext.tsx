@@ -1,5 +1,5 @@
 import React from 'react';
-import { useReactoomScoped } from '../../src';
+import { useScoped } from '../../src';
 
 class AsyncLogsModel {
   messages: string[] = [];
@@ -16,7 +16,7 @@ class AsyncLogsModel {
 }
 
 const AsyncScopedContext: React.FC = () => {
-  const logs = useReactoomScoped(AsyncLogsModel);
+  const logs = useScoped(AsyncLogsModel);
   return (
     <div>
       <h3>AsyncScopedContext:</h3>

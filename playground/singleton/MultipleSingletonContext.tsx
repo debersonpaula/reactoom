@@ -1,10 +1,12 @@
 import React from 'react';
-import { ReactoomProvider } from '../../src';
+import { createStore, ReactoomProvider } from '../../src';
 import { SingletonContextComponent } from './SingletonContext';
+
+const store = createStore();
 
 const MultipleSingletonContext: React.FC = () => {
   return (
-    <ReactoomProvider>
+    <ReactoomProvider store={store}>
       <h3>MultipleSingletonContext</h3>
       <br />
       <SingletonContextComponent />

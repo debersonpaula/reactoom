@@ -1,5 +1,5 @@
 import React from 'react';
-import { ReactoomProvider, useReactoomSingleton } from '../../src';
+import { createStore, ReactoomProvider, useSingleton } from '../../src';
 
 class CounterModel {
   count = 0;
@@ -14,7 +14,7 @@ class CounterModel {
 }
 
 export const SingletonContextComponent: React.FC = () => {
-  const counter = useReactoomSingleton(CounterModel);
+  const counter = useSingleton(CounterModel);
 
   React.useEffect(() => {
     counter.add();
@@ -30,9 +30,11 @@ export const SingletonContextComponent: React.FC = () => {
   );
 };
 
+const store = createStore();
+
 const WithEffectSingletonContext: React.FC = () => {
   return (
-    <ReactoomProvider>
+    <ReactoomProvider store={store}>
       <SingletonContextComponent />
     </ReactoomProvider>
   );

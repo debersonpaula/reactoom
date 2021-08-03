@@ -7,7 +7,8 @@ import MultipleSingletonContext from './singleton/MultipleSingletonContext';
 import ScopedContext from './scoped/ScopedContext';
 import SingletonContext from './singleton/SingletonContext';
 import WithEffectContext from './scoped/WithEffectContext';
-import WithEffectSingletonContext from './singleton/WIthEffectSingletonContext';
+import WithEffectSingletonContext from './singleton/WithEffectSingletonContext';
+import DepsContext from './deps/DepsContext';
 
 export function Routes(): JSX.Element {
   const components = [
@@ -19,12 +20,13 @@ export function Routes(): JSX.Element {
     WithEffectSingletonContext,
     MultipleSingletonContext,
     IsolatedSingletonContext,
+    DepsContext,
   ];
   return (
     <div>
-      <ul>
+      <ul style={{ display: 'flex', flexWrap: 'wrap' }}>
         {components.map((item, key) => (
-          <li key={key}>
+          <li key={key} style={{ marginRight: 32 }}>
             <h3>
               <Link to={item.name} id={item.name}>
                 {item.name}
