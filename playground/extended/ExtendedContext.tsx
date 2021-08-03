@@ -11,6 +11,10 @@ class BaseModel {
   setValue(value: number): void {
     this.count = value;
   }
+
+  extendable(value: number): void {
+    this.count = this.count + value;
+  }
 }
 
 class CounterModel extends BaseModel {
@@ -25,6 +29,10 @@ class CounterModel extends BaseModel {
   reset = () => {
     this.setValue(0);
   };
+
+  extendable(): void {
+    super.extendable(5);
+  }
 }
 
 const ExtendedContextApp: React.FC = () => {
@@ -37,6 +45,7 @@ const ExtendedContextApp: React.FC = () => {
       <button onClick={counter.add}>add</button>
       <button onClick={counter.del}>del</button>
       <button onClick={counter.reset}>reset</button>
+      <button onClick={counter.extendable}>extendable</button>
     </div>
   );
 };
