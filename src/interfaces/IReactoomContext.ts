@@ -1,6 +1,7 @@
-import { IClassReducerAction } from './IClassReducerAction';
+import { ReactoomStore } from '../store/ReactoomStore';
+import { IReducerAction } from './IReducerAction';
 
 export interface IReactoomContext {
-  ___dispatcher?: React.Dispatch<IClassReducerAction>;
-  [className: string]: unknown;
+  dispatcher?: React.Dispatch<IReducerAction>;
+  store?: ReactoomStore;
 }
