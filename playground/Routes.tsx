@@ -9,6 +9,7 @@ import SingletonContext from './singleton/SingletonContext';
 import WithEffectContext from './scoped/WithEffectContext';
 import WithEffectSingletonContext from './singleton/WithEffectSingletonContext';
 import DepsContext from './deps/DepsContext';
+import ExtendedContext from './extended/ExtendedContext';
 
 export function Routes(): JSX.Element {
   const components = [
@@ -21,6 +22,7 @@ export function Routes(): JSX.Element {
     MultipleSingletonContext,
     IsolatedSingletonContext,
     DepsContext,
+    ExtendedContext,
   ];
   return (
     <div>

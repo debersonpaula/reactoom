@@ -3,6 +3,7 @@ import { IType } from '../interfaces/IType';
 import { IReducerAction } from '../interfaces/IReducerAction';
 import { ReactoomDependency } from '../store/ReactoomDependency';
 import { ReactoomStore } from '../store/ReactoomStore';
+import { extractInstanceProps } from '../helpers/extractInstancePropsAndMethods';
 
 export class StateContext {
   private _fn: IType<unknown>;
@@ -42,24 +43,23 @@ export class StateContext {
   private _extractAllProperties(): void {
     this._state = {};
 
-    Object.getOwnPropertyNames(this._instance).forEach((propName) => {
+    const props = extractInstanceProps(this._instance);
+
+    // assign all values to state
+    props.values.forEach((propName) => {
       this._definePrimaryProp(propName);
-      const property = this._instance[propName];
-      if (typeof property === 'function' && !property.disabled) {
-        this._defineMethodProp(propName);
-      }
     });
 
-    Object.getOwnPropertyNames(this._fn.prototype).forEach((propName) => {
-      const objmethod = this._fn.prototype[propName];
-      if (
-        typeof objmethod === 'function' &&
-        propName !== 'constructor' &&
-        propName !== '__reactstandin__regenerateByEval'
-      ) {
-        this._definePrimaryProp(propName);
-        this._defineMethodProp(propName);
-      }
+    // assign all dependencies to state
+    // and replace to owner state
+    props.deps.forEach((propName) => {
+      this._definePrimaryProp(propName);
+    });
+
+    // assign all values to state
+    props.methods.forEach((propName) => {
+      this._definePrimaryProp(propName);
+      this._defineMethodProp(propName);
     });
   }
 
