@@ -3,7 +3,7 @@ import { IType } from '../interfaces/IType';
 import { StateContext } from '../context/StateContext';
 import { scopedReducer } from '../reducers/scopedReducer';
 
-export function useReactoomScoped<T>(classFn: IType<T>): T {
+export function useScoped<T>(classFn: IType<T>): T {
   const [state, dispatcher] = useReducer(scopedReducer, null);
   let stateContext: StateContext;
 
