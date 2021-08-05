@@ -24,7 +24,7 @@ const ScopedContext: React.FC = () => {
 
   return (
     <div>
-      <h3>ScopedContext</h3>
+      <h3>Scoped Context</h3>
       <p>Count = {counter.count}</p>
       <p>SubCount = {counter.subcount.count}</p>
       <button onClick={counter.add}>add</button>

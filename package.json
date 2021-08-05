@@ -26,7 +26,7 @@
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-router-dom": "5.2.0",
-    "tsrx": "1.0.0-beta.20",
+    "tsrx": "1.0.0-beta.24",
     "typescript": "4.2.4"
   },
   "peerDependencies": {

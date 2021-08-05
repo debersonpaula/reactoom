@@ -4,7 +4,7 @@ import ScopedContext from './ScopedContext';
 const MultipleScopedContext: React.FC = () => {
   return (
     <div>
-      <h3>MultipleScopedContext sample:</h3>
+      <h3>Multiple Scoped Context:</h3>
       <ScopedContext />
       <ScopedContext />
       <ScopedContext />
