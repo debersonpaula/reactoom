@@ -27,7 +27,9 @@ export class StateManagement {
     this._fn = classFn;
     this._className = model.objectName;
     this._name = model.name;
-    this._instance = new classFn();
+
+    const deps = this._getDeps(model.deps, store);
+    this._instance = new classFn(...deps);
     this._state = {};
     this._dispatcher = dispatcher;
     this._extractAllProperties();
@@ -68,10 +70,11 @@ export class StateManagement {
 
   private _extractAllActions(): void {
     const actions = getActionsData(this._instance);
-    console.debug('_extractMethods.actions', actions);
-    actions.forEach((item) => {
-      this._defineAction(item.objectName, item.name);
-    });
+    if (actions) {
+      actions.forEach((item) => {
+        this._defineAction(item.objectName, item.name);
+      });
+    }
   }
 
   private _definePrimaryProp(propName: string) {
@@ -100,13 +103,24 @@ export class StateManagement {
 
   private _defineAction(objectName: string, actionName: string) {
     // keep real action handler
-    const handler = this._instance[objectName].bind(this._instance);
+    const handler = this._instance[objectName];
+    //.bind(this._instance);
     // const name = this._fn.name + '.' + objectName;
     const _dispatchState = this._dispatchState.bind(this);
     // replace instance method to dispatcher
     this._instance[objectName] = (...args: unknown[]) => {
-      handler(...args);
+      handler.call(this._instance, ...args);
       _dispatchState(actionName);
     };
+  }
+
+  private _getDeps(deps: string[], store?: ReactoomStore) {
+    const args = [];
+    if (store) {
+      deps.forEach((item) => {
+        args.push(store.getState(item));
+      });
+    }
+    return args;
   }
 }

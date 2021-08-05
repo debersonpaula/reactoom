@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { IType } from '../interfaces/IType';
 import 'reflect-metadata';
+import { IType } from '../interfaces/IType';
 import { IMetaData } from '../interfaces/IMetaData';
 
 const METAKEY_MODEL = Symbol('METAKEY_MODEL');

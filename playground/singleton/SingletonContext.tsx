@@ -1,17 +1,6 @@
 import React from 'react';
 import { createStore, ReactoomProvider, useSingleton } from '../../src';
-
-class CounterModel {
-  count = 0;
-
-  add(): void {
-    this.count++;
-  }
-
-  del(): void {
-    this.count--;
-  }
-}
+import { CounterModel } from '../models/CounterModel';
 
 export const SingletonContextComponent: React.FC = () => {
   const counter = useSingleton(CounterModel);

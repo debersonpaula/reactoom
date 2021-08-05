@@ -1,42 +1,17 @@
 import React from 'react';
-import { createStore, ReactoomProvider, useSingleton } from '../../src';
+import { Action, createStore, Model, ReactoomProvider, useSingleton } from '../../src';
+import { CounterModel } from '../models/CounterModel';
 
-class BaseModel {
-  count = 0;
-
-  sum(value: number): void {
-    this.setValue(this.count + value);
-  }
-
-  setValue(value: number): void {
-    this.count = value;
-  }
-
-  extendable(value: number): void {
-    this.count = this.count + value;
-  }
-}
-
-class CounterModel extends BaseModel {
-  add(): void {
-    this.sum(1);
-  }
-
-  del(): void {
-    this.sum(-1);
-  }
-
-  reset = () => {
-    this.setValue(0);
-  };
-
-  extendable(): void {
-    super.extendable(5);
+@Model()
+class ExtendedCounterModel extends CounterModel {
+  @Action()
+  reset() {
+    this.count = 0;
   }
 }
 
 const ExtendedContextApp: React.FC = () => {
-  const counter = useSingleton(CounterModel);
+  const counter = useSingleton(ExtendedCounterModel);
 
   return (
     <div>
@@ -45,7 +20,6 @@ const ExtendedContextApp: React.FC = () => {
       <button onClick={counter.add}>add</button>
       <button onClick={counter.del}>del</button>
       <button onClick={counter.reset}>reset</button>
-      <button onClick={counter.extendable}>extendable</button>
     </div>
   );
 };

@@ -1,22 +1,26 @@
 import React from 'react';
-import { createStore, injectSingleton, ReactoomProvider, useSingleton } from '../../src';
+import { Action, createStore, Model, ReactoomProvider, useSingleton } from '../../src';
 
+@Model()
 class DepOneModel {
   count = 0;
 
+  @Action()
   increment(): void {
     this.count++;
   }
 }
 
+@Model()
 class DepTwoModel {
   count = 0;
-  stateOne = injectSingleton(DepOneModel);
 
+  constructor(public depOne: DepOneModel) {}
+
+  @Action()
   increment(): void {
-    const stateOne = this.stateOne;
-    this.count = stateOne.count + 2;
-    stateOne.increment();
+    this.count++;
+    this.depOne.increment();
   }
 }
 

@@ -3,7 +3,8 @@
   "include": ["src/**/*", "playground/**/*", "test/**/*"],
   "exclude": ["node_modules"],
   "compilerOptions": {
+    "target": "ES6",
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "outDir": "./dist"
   }
 }
