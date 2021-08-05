@@ -1,5 +1,9 @@
 {
   "extends": "./node_modules/tsrx/tsconfig.json",
   "include": ["src/**/*", "playground/**/*", "test/**/*"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  }
 }

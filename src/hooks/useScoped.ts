@@ -1,21 +1,15 @@
-import { useReducer, useEffect } from 'react';
+import { useReducer } from 'react';
 import { IType } from '../interfaces/IType';
-import { StateContext } from '../context/StateContext';
 import { scopedReducer } from '../reducers/scopedReducer';
+import { StateManagement } from '../state/StateManagement';
 
 export function useScoped<T>(classFn: IType<T>): T {
   const [state, dispatcher] = useReducer(scopedReducer, null);
-  let stateContext: StateContext;
+  let stateContext: StateManagement;
 
   if (!state) {
-    stateContext = new StateContext(classFn, dispatcher);
+    stateContext = new StateManagement(classFn, dispatcher);
   }
-
-  useEffect(() => {
-    if (stateContext) {
-      stateContext.dispatchInitialState();
-    }
-  }, []);
 
   return (state as T) || (stateContext.state as T);
 }

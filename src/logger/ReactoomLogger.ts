@@ -11,8 +11,8 @@ export function LogAction(options: ILogAction): void {
 }
 
 interface ILogAction {
+  scope: string;
   type: string;
-  name: string;
   payload: unknown;
-  className: string;
+  state: string;
 }

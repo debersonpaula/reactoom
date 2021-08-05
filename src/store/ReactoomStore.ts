@@ -1,11 +1,11 @@
-import { StateContext } from '../context/StateContext';
 import { IReactoomContext } from '../interfaces/IReactoomContext';
 import { IReducerAction } from '../interfaces/IReducerAction';
 import { IType } from '../interfaces/IType';
 import { LogAction } from '../logger/ReactoomLogger';
+import { StateManagement } from '../state/StateManagement';
 
 export class ReactoomStore {
-  private _states: Record<string, StateContext> = {};
+  private _states: Record<string, StateManagement> = {};
 
   public useState = (
     classFn: IType<unknown>,
@@ -14,7 +14,7 @@ export class ReactoomStore {
     const className = classFn.name;
     let stateContext = this._states[className];
     if (!stateContext) {
-      stateContext = new StateContext(classFn, null, this);
+      stateContext = new StateManagement(classFn, null, this);
       this._states[className] = stateContext;
     }
     stateContext._dispatcher = dispatcher;
@@ -27,7 +27,7 @@ export class ReactoomStore {
   };
 
   public reducer = (state: IReactoomContext, action: IReducerAction): IReactoomContext => {
-    LogAction({ ...action, type: 'singletonReducer' });
+    LogAction({ ...action, scope: 'singletonReducer' });
     return { ...state };
   };
 }
