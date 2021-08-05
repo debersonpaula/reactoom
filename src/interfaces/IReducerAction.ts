@@ -1,5 +1,16 @@
 export interface IReducerAction {
-  name: string;
+  /**
+   * Name of the action
+   */
+  type: string;
+
+  /**
+   * Data
+   */
   payload: unknown;
-  className: string;
+
+  /**
+   * Name of the state
+   */
+  state: string;
 }
