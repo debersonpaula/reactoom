@@ -1,17 +1,6 @@
 import React from 'react';
 import { useScoped } from '../../src';
-
-class CounterModel {
-  count = 0;
-
-  add(): void {
-    this.count++;
-  }
-
-  del(): void {
-    this.count--;
-  }
-}
+import { CounterModel } from '../models/CounterModel';
 
 const WithEffectContext: React.FC = () => {
   const counter = useScoped(CounterModel);

@@ -1,19 +1,6 @@
 import React from 'react';
 import { useScoped } from '../../src';
-
-class AsyncLogsModel {
-  messages: string[] = [];
-
-  addAsyncLog(): void {
-    setTimeout(() => {
-      this.addLog();
-    }, 1000);
-  }
-
-  addLog(): void {
-    this.messages.push(new Date().toISOString());
-  }
-}
+import { AsyncLogsModel } from '../models/AsyncLogsModel';
 
 const AsyncScopedContext: React.FC = () => {
   const logs = useScoped(AsyncLogsModel);

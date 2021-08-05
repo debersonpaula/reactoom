@@ -4,3 +4,4 @@ export { createStore } from './store/ReactoomStore';
 export { injectSingleton } from './hooks/injectSingleton';
 export { useScoped } from './hooks/useScoped';
 export { useSingleton } from './hooks/useSingleton';
+export { Action, Model } from './decorators';
