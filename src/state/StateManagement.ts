@@ -92,13 +92,18 @@ export class StateManagement {
   private _definePrimaryMethod(propName: string) {
     Object.defineProperty(this._state, propName, {
       enumerable: true,
-      get: () => this._instance[propName].bind(this._instance),
+      get: () => this._getProperty(propName),
       set: () => {
         throw new Error(
           `The property ${propName} is read only and can't be assigned outside the context.`,
         );
       },
     });
+  }
+
+  private _getProperty(propName: string) {
+    const property = this._instance[propName];
+    return typeof property === 'function' ? property.bind(this._instance) : property;
   }
 
   private _defineAction(objectName: string, actionName: string) {

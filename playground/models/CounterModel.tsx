@@ -19,4 +19,8 @@ export class CounterModel {
     this.count--;
     this.subcount.countPlus = this.count * 2;
   }
+
+  get countPlusOne(): number {
+    return this.count + 1;
+  }
 }
