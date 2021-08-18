@@ -10,7 +10,7 @@ for (var key in paths) {
 }
 
 config = require('./dev.config');
-config.sourcePath = 'test';
+config.sourcePath = 'tests';
 config.jest = {
   coverageThreshold: JSON.stringify({
     global: {
@@ -21,7 +21,6 @@ config.jest = {
     },
   }),
   verbose: true,
-  updateSnapshot: true,
   moduleNameMapper,
   collectCoverageFrom: ['src/**/*.{ts,tsx}', 'playground/**/*.{ts,tsx}', '!src/index.tsx', '!playground/index.tsx', '!test/**/*'],
   

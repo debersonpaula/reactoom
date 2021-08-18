@@ -7,9 +7,13 @@ export const SingletonContextComponent: React.FC = () => {
   return (
     <div>
       <h3>SingletonContext</h3>
-      <p>Count = {counter.count}</p>
-      <button onClick={counter.add}>add</button>
-      <button onClick={counter.del}>del</button>
+      <p data-testid="scoped-count">Count = {counter.count}</p>
+      <button onClick={counter.add} data-testid="scoped-add">
+        add
+      </button>
+      <button onClick={counter.del} data-testid="scoped-del">
+        del
+      </button>
     </div>
   );
 };

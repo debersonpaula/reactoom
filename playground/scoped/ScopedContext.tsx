@@ -8,11 +8,15 @@ const ScopedContext: React.FC = () => {
   return (
     <div>
       <h3>Scoped Context</h3>
-      <p>Count = {counter.count}</p>
+      <p data-testid="scoped-count">Count = {counter.count}</p>
       <p>SubCount = {counter.subcount.countPlus}</p>
       <p>Property CountPlusOne = {counter.countPlusOne}</p>
-      <button onClick={counter.add}>add</button>
-      <button onClick={counter.del}>del</button>
+      <button onClick={counter.add} data-testid="scoped-add">
+        add
+      </button>
+      <button onClick={counter.del} data-testid="scoped-del">
+        del
+      </button>
     </div>
   );
 };
