@@ -27,8 +27,13 @@ describe('ReactoomStateHandler', () => {
   // -----------------------------------------------------------------------------------
   it('getState() should return count = 0', () => {
     const state = store.getState().COUNTER as CounterModel;
-    expect(state.count).toStrictEqual(0);
+    expect(state.count).toBe(0);
   });
   // -----------------------------------------------------------------------------------
+  it('trigger method add and check if count = 1', () => {
+    const state = store.getState().COUNTER as CounterModel;
+    state.add();
+    expect(state.count).toBe(1);
+  });
   // -----------------------------------------------------------------------------------
 });

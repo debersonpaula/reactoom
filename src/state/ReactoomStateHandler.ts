@@ -1,4 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { getActionsData } from '../decorators/Action';
 import { getModelData } from '../decorators/Model';
+import { extractInstanceProps } from '../helpers/extractInstanceProps';
 import { ReactoomStore } from '../store/ReactoomStore';
 import { IType } from '../types/IType';
 
@@ -20,10 +23,10 @@ export class ReactoomStateHandler<T> {
     this._className = model.objectName;
     this._name = model.name;
     const deps = this._getDeps(model.deps);
-    const instance = new classFn(...deps);
+    this._instance = new classFn(...deps);
 
     // define reducer
-    this._store.include(this._name, instance, (state) => state);
+    this._store.include(this._name, this._instance, (state) => state);
 
     this._state = {};
     // this._dispatcher = dispatcher;
@@ -52,5 +55,85 @@ export class ReactoomStateHandler<T> {
       });
     }
     return args;
+  }
+
+  /**
+   * Extract all values from instance
+   */
+  private _extractAllProperties(): void {
+    const props = extractInstanceProps(this._instance);
+
+    // assign all values to state
+    props.values.forEach((propName) => {
+      this._definePrimaryProp(propName);
+    });
+
+    // assign all methods to state
+    props.methods.forEach((propName) => {
+      this._definePrimaryMethod(propName);
+    });
+  }
+
+  private _extractAllActions(): void {
+    const actions = getActionsData(this._instance);
+    if (actions) {
+      actions.forEach((item) => {
+        this._defineAction(item.objectName, item.name);
+      });
+    }
+  }
+
+  private _definePrimaryProp(propName: string) {
+    Object.defineProperty(this._state, propName, {
+      enumerable: true,
+      get: () => this._instance[propName],
+      set: () => {
+        throw new Error(
+          `The property ${propName} is read only and can't be assigned outside the context.`,
+        );
+      },
+    });
+  }
+
+  private _definePrimaryMethod(propName: string) {
+    Object.defineProperty(this._state, propName, {
+      enumerable: true,
+      get: () => this._getProperty(propName),
+      set: () => {
+        throw new Error(
+          `The property ${propName} is read only and can't be assigned outside the context.`,
+        );
+      },
+    });
+  }
+
+  private _getProperty(propName: string) {
+    const property = this._instance[propName];
+    return typeof property === 'function' ? property.bind(this._instance) : property;
+  }
+
+  private _defineAction(objectName: string, actionName: string) {
+    // keep real action handler
+    const handler = this._instance[objectName];
+    //.bind(this._instance);
+    // const name = this._fn.name + '.' + objectName;
+    const _dispatchState = this._dispatchState.bind(this);
+    // replace instance method to dispatcher
+    this._instance[objectName] = (...args: unknown[]) => {
+      handler.call(this._instance, ...args);
+      _dispatchState(actionName);
+    };
+  }
+
+  private _dispatchState(method: string) {
+    const name = this._name;
+    const type = this._name + '.' + method;
+    const payload = { ...this.state };
+
+    this._store.dispatch({
+      name,
+      type,
+      payload,
+    });
   }
 }
