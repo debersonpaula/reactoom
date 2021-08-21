@@ -1,5 +1,5 @@
 import { useReducer } from 'react';
-import { IType } from '../interfaces/IType';
+import { IType } from '../types/IType';
 import { scopedReducer } from '../reducers/scopedReducer';
 import { StateManagement } from '../state/StateManagement';
 

@@ -1,4 +1,4 @@
-import { IType } from '../interfaces/IType';
+import { IType } from '../types/IType';
 
 export class ReactoomDependency {
   public classFn: IType<unknown>;

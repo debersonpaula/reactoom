@@ -2,7 +2,7 @@ import { getActionsData } from '../decorators/Action';
 import { getModelData } from '../decorators/Model';
 import { extractInstanceProps } from '../helpers/extractInstanceProps';
 import { IReducerAction } from '../interfaces/IReducerAction';
-import { IType } from '../interfaces/IType';
+import { IType } from '../types/IType';
 import { ReactoomStore } from '../store/ReactoomStore';
 
 export class StateManagement {
@@ -123,7 +123,7 @@ export class StateManagement {
     const args = [];
     if (store) {
       deps.forEach((item) => {
-        args.push(store.getState(item));
+        args.push(store.getContextStateByName(item));
       });
     }
     return args;
