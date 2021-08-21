@@ -6,11 +6,8 @@ var { DefaultConfig } = require('tsrx/tools');
 module.exports = DefaultConfig({
   sourcePath: 'playground',
   outputPath: 'dist',
-  htmlTemplate: 'playground/index.html',
+  publicFolder: 'playground/public',
   port: 8080,
-  host: 'localhost',
-  env: {},
-  reactHotLoader: true,
   devServer: {
     open: true,
     hot: true,
