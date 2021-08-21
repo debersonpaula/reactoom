@@ -19,23 +19,38 @@ export class ReactoomStateHandler<T> {
     this._fn = classFn;
     this._className = model.objectName;
     this._name = model.name;
-    // const deps = this._getDeps(model.deps, store);
-    // this._instance = new classFn(...deps);
+    const deps = this._getDeps(model.deps);
+    const instance = new classFn(...deps);
 
-    // this._state = {};
+    // define reducer
+    this._store.include(this._name, instance, (state) => state);
+
+    this._state = {};
     // this._dispatcher = dispatcher;
     // this._extractAllProperties();
     // this._extractAllActions();
-
-    const instance = new classFn();
-    
   }
 
-  compareByClassType(target: IType<unknown>): boolean {
+  public compareByClassType(target: IType<unknown>): boolean {
     return target === this._fn;
   }
 
-  compareByClassName(className: string): boolean {
+  public compareByClassName(className: string): boolean {
     return className === this._className;
+  }
+
+  get state(): any {
+    return this._state;
+  }
+
+  private _getDeps(deps: string[]) {
+    const args = [];
+    if (this._store) {
+      deps.forEach((item) => {
+        const handler = this._store.getModelByClassName(item);
+        args.push(handler.state);
+      });
+    }
+    return args;
   }
 }

@@ -49,16 +49,34 @@ export class ReactoomStore {
   // --- MODEL STATE HANDLERS ----------------------------
   // -----------------------------------------------------
 
+  /**
+   * Add Model class to Store
+   * @param classFn ClassType
+   */
   public addModel(classFn: IType<unknown>): void {
-    let handler = this.getModel(classFn);
+    let handler = this.getModelByClassType(classFn);
     if (!handler) {
       handler = new ReactoomStateHandler(classFn, this);
       this._handlers.push(handler);
     }
   }
 
-  public getModel<T>(classFn: IType<T>): ReactoomStateHandler<T> {
+  /**
+   * Get the State Handler of the Model by ClassType
+   * @param classFn ClassType
+   * @returns ReactoomStateHandler
+   */
+  public getModelByClassType<T>(classFn: IType<T>): ReactoomStateHandler<T> {
     return this._handlers.find((item) => item.compareByClassType(classFn));
+  }
+
+  /**
+   * Get the State Handler of the Model by class name
+   * @param name Class Name
+   * @returns
+   */
+  public getModelByClassName<T>(name: string): ReactoomStateHandler<T> {
+    return this._handlers.find((item) => item.compareByClassName(name));
   }
 
   private _runListeners(action: IReactoomStoreDispatchAction<any>) {
