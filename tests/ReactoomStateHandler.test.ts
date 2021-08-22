@@ -30,10 +30,19 @@ describe('ReactoomStateHandler', () => {
     expect(state.count).toBe(0);
   });
   // -----------------------------------------------------------------------------------
-  it('trigger method add and check if count = 1', () => {
+  it('trigger method add x3 and check if count = 3', () => {
     const state = store.getState().COUNTER as CounterModel;
     state.add();
-    expect(state.count).toBe(1);
+    state.add();
+    state.add();
+    expect(state.count).toBe(3);
+  });
+  // -----------------------------------------------------------------------------------
+  it('trigger method del x2 and check if count = -2', () => {
+    const state = store.getState().COUNTER as CounterModel;
+    state.del();
+    state.del();
+    expect(state.count).toBe(-2);
   });
   // -----------------------------------------------------------------------------------
 });

@@ -18,20 +18,23 @@ export class ReactoomStateHandler<T> {
     if (!model) {
       throw Error(`This model ${classFn.name} does not have @Model decorator.`);
     }
+    // define base vars
     this._store = store;
     this._fn = classFn;
     this._className = model.objectName;
     this._name = model.name;
+
+    // create initial instance
     const deps = this._getDeps(model.deps);
     this._instance = new classFn(...deps);
 
-    // define reducer
-    this._store.include(this._name, this._instance, (state) => state);
-
+    // assign state
     this._state = {};
-    // this._dispatcher = dispatcher;
-    // this._extractAllProperties();
-    // this._extractAllActions();
+    this._extractAllProperties();
+    this._extractAllActions();
+
+    // define reducer
+    this._store.include(this._name, this._state, (state) => state);
   }
 
   public compareByClassType(target: IType<unknown>): boolean {
@@ -115,8 +118,6 @@ export class ReactoomStateHandler<T> {
   private _defineAction(objectName: string, actionName: string) {
     // keep real action handler
     const handler = this._instance[objectName];
-    //.bind(this._instance);
-    // const name = this._fn.name + '.' + objectName;
     const _dispatchState = this._dispatchState.bind(this);
     // replace instance method to dispatcher
     this._instance[objectName] = (...args: unknown[]) => {
