@@ -3,6 +3,10 @@ import { IType } from '../types/IType';
 import { ReactoomContext } from '../context/ReactoomContext';
 
 export function useSingleton<T>(classFn: IType<T>): T {
-  const { store, dispatcher } = useContext(ReactoomContext);
-  return store.useState(classFn, dispatcher) as T;
+  const { store } = useContext(ReactoomContext);
+  let model = store.getModelByClassType(classFn);
+  if (!model) {
+    model = store.addModel(classFn);
+  }
+  return model.state;
 }

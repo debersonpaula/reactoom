@@ -10,7 +10,7 @@ export class ReactoomStateHandler<T> {
   private _className: string;
   private _name: string;
   private _instance: unknown;
-  private _state: unknown;
+  private _state: any;
   public _store: ReactoomStore;
 
   constructor(classFn: IType<T>, store: ReactoomStore) {
@@ -45,7 +45,7 @@ export class ReactoomStateHandler<T> {
     return className === this._className;
   }
 
-  get state(): any {
+  get state(): T {
     return this._state;
   }
 

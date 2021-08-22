@@ -8,12 +8,13 @@ import { StateManagement } from '../state/StateManagement';
 import { TDispatchCallback } from '../types/TDispatchCallback';
 import { TReducerCallback } from '../types/TReducerCallback';
 import { ReactoomStateHandler } from '../state/ReactoomStateHandler';
+import { Subject, Subscription } from 'rxjs';
 
 export class ReactoomStore {
   private _state: Record<string, unknown> = {};
   private _reducers: Record<string, TReducerCallback<any>> = {};
-  private _listeners: TDispatchCallback<any>[] = [];
   private _handlers: ReactoomStateHandler<any>[] = [];
+  private _eventRelay = new Subject<IReactoomStoreDispatchAction<any>>();
 
   // -----------------------------------------------------
   // --- PURE STATE HANDLERS -----------------------------
@@ -36,8 +37,8 @@ export class ReactoomStore {
     }
   }
 
-  public subscribe(listener: TDispatchCallback<any>): void {
-    this._listeners.push(listener);
+  public subscribe(listener: TDispatchCallback<any>): Subscription {
+    return this._eventRelay.subscribe(listener);
   }
 
   public include<T = any>(name: string, initialState: T, reducer: TReducerCallback<T>): void {
@@ -53,12 +54,13 @@ export class ReactoomStore {
    * Add Model class to Store
    * @param classFn ClassType
    */
-  public addModel(classFn: IType<unknown>): void {
+  public addModel<T>(classFn: IType<T>): ReactoomStateHandler<T> {
     let handler = this.getModelByClassType(classFn);
     if (!handler) {
       handler = new ReactoomStateHandler(classFn, this);
       this._handlers.push(handler);
     }
+    return handler;
   }
 
   /**
@@ -80,9 +82,7 @@ export class ReactoomStore {
   }
 
   private _runListeners(action: IReactoomStoreDispatchAction<any>) {
-    if (this._listeners.length) {
-      this._listeners.forEach((cb) => cb(action));
-    }
+    this._eventRelay.next(action);
   }
 
   // old one

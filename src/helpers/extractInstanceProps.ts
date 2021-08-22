@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 
-import { ReactoomDependency } from '../store/ReactoomDependency';
-
 export function extractInstanceProps(instance: any): IProps {
   const result: IProps = {
     methods: [],
@@ -14,8 +12,6 @@ export function extractInstanceProps(instance: any): IProps {
     const property = instance[propName];
     if (typeof property === 'function') {
       result.methods.push(propName);
-    } else if (property instanceof ReactoomDependency) {
-      result.deps.push(propName);
     } else {
       result.values.push(propName);
     }
