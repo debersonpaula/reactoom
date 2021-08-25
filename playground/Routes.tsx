@@ -1,18 +1,38 @@
 import React from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
-
-import { AsyncApp } from './asynchronous/AsyncApp';
-import { CounterApp } from './counter/CounterApp';
+import AsyncScopedContext from './scoped/AsyncScopedContext';
+import IsolatedSingletonContext from './singleton/IsolatedSingletonContext';
+import MultipleScopedContext from './scoped/MultipleScopedContext';
+import MultipleSingletonContext from './singleton/MultipleSingletonContext';
+import ScopedContext from './scoped/ScopedContext';
+import SingletonContext from './singleton/SingletonContext';
+import WithEffectContext from './scoped/WithEffectContext';
+import WithEffectSingletonContext from './singleton/WithEffectSingletonContext';
+import DepsContext from './deps/DepsContext';
+import ExtendedContext from './extended/ExtendedContext';
 
 export function Routes(): JSX.Element {
-  const components = [CounterApp, AsyncApp];
+  const components = [
+    ScopedContext,
+    MultipleScopedContext,
+    AsyncScopedContext,
+    WithEffectContext,
+    SingletonContext,
+    WithEffectSingletonContext,
+    MultipleSingletonContext,
+    IsolatedSingletonContext,
+    DepsContext,
+    ExtendedContext,
+  ];
   return (
     <div>
-      <ul>
+      <ul style={{ display: 'flex', flexWrap: 'wrap' }}>
         {components.map((item, key) => (
-          <li key={key}>
+          <li key={key} style={{ marginRight: 32 }}>
             <h3>
-              <Link to={item.name} id={item.name}>{item.name}</Link>
+              <Link to={item.name} id={item.name}>
+                {item.name}
+              </Link>
             </h3>
           </li>
         ))}

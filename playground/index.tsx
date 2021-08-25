@@ -1,12 +1,10 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import { reactHot } from 'tsrx/tools';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { EnableLogs } from '../src';
 import { App } from './App';
 import './style.css';
-import { EnableDebugger } from 'reactoom';
 
-EnableDebugger();
+EnableLogs();
 
 const root = document.getElementById('app');
-const HotReloadComponent = reactHot(module, App);
-ReactDOM.render(<HotReloadComponent />, root);
+ReactDOM.render(<App />, root);

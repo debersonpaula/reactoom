@@ -3,11 +3,8 @@
   "include": ["src/**/*"],
   "exclude": ["node_modules"],
   "compilerOptions": {
-    "baseUrl": "./",
     "outDir": "bin",
     "declaration": true,
-    "paths": {
-      "reactoom": ["src/index"]
-    }
+    "target": "ES5"
   }
 }

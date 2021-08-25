@@ -1,13 +1,22 @@
 {
-  "extends": "./node_modules/tsrx/tsconfig.json",
-  "include": ["src/**/*", "playground/**/*", "test/**/*"],
+  "include": ["src/**/*", "playground/**/*", "tests/**/*"],
   "exclude": ["node_modules"],
   "compilerOptions": {
-    "baseUrl": "./",
-    "outDir": "dist",
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "emitDecoratorMetadata": true,
     "esModuleInterop": true,
-    "paths": {
-      "reactoom": ["src/index"]
-    }
-  }
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "jsx": "react",
+    "lib": ["esnext", "DOM", "DOM.Iterable"],
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "noFallthroughCasesInSwitch": true,
+    "outDir": "./dist",
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "target": "es6"
+  },
+  "typeAcquisition": { "include": ["jest"] }
 }
