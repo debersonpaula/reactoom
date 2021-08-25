@@ -10,11 +10,28 @@ import { TReducerCallback } from '../types/TReducerCallback';
 import { ReactoomStateHandler } from '../state/ReactoomStateHandler';
 import { Subject, Subscription } from 'rxjs';
 
+interface IStoreOptions {
+  /**
+   * Preload models to the store
+   */
+  models?: IType<any>[];
+}
+
 export class ReactoomStore {
   private _state: Record<string, unknown> = {};
   private _reducers: Record<string, TReducerCallback<any>> = {};
   private _handlers: ReactoomStateHandler<any>[] = [];
   private _eventRelay = new Subject<IReactoomStoreDispatchAction<any>>();
+
+  constructor(options?: IStoreOptions) {
+    if (options) {
+      if (options.models) {
+        options.models.forEach((model) => {
+          this.addModel(model);
+        });
+      }
+    }
+  }
 
   // -----------------------------------------------------
   // --- PURE STATE HANDLERS -----------------------------
@@ -113,6 +130,6 @@ export class ReactoomStore {
   };
 }
 
-export function createStore(): ReactoomStore {
-  return new ReactoomStore();
+export function createStore(options?: IStoreOptions): ReactoomStore {
+  return new ReactoomStore(options);
 }

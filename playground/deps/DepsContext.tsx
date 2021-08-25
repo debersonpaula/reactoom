@@ -41,7 +41,7 @@ const DepsContextApp: React.FC = () => {
   );
 };
 
-const store = createStore();
+const store = createStore({ models: [DepOneModel, DepTwoModel] });
 
 const DepsContext: React.FC = () => {
   return (
