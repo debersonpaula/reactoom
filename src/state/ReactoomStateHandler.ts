@@ -121,8 +121,14 @@ export class ReactoomStateHandler<T> {
     const _dispatchState = this._dispatchState.bind(this);
     // replace instance method to dispatcher
     this._instance[objectName] = (...args: unknown[]) => {
-      handler.call(this._instance, ...args);
-      _dispatchState(actionName);
+      const result = handler.call(this._instance, ...args);
+      if (result instanceof Promise) {
+        result.finally(() => {
+          _dispatchState(actionName);
+        });
+      } else {
+        _dispatchState(actionName);
+      }
     };
   }
 

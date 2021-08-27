@@ -247,9 +247,44 @@ const store = createStore({ models: [DepOneModel, DepTwoModel] });
 
 ---
 
+## Async Actions
+
+Async methods can be use inside the actions.
+
+In this case, the state change will be trigger only after the finish of the Promise.
+
+```ts
+function asyncCounter(value: number) {
+  return new Promise<number>((resolve) => {
+    setTimeout(() => {
+      resolve(value);
+    }, 1000);
+  });
+}
+
+@Model()
+export class AsyncCounterModel {
+  count = 0;
+
+  @Action()
+  async add(): Promise<void> {
+    this.count = await asyncCounter(this.count + 1);
+  }
+
+  @Action()
+  async del(): Promise<void> {
+    this.count = await asyncCounter(this.count - 1);
+  }
+}
+```
+
+---
+
 ## Sample
 
 The sample project is available in the source https://github.com/debersonpaula/reactoom. Just install dependencies and run with `npm start`.
+
+---
 
 ## License
 
